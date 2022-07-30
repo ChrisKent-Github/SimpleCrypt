@@ -77,8 +77,7 @@ public class ROT13 {
     }
 
     public String caesarCipher(String text) {
-        rotate(text, 'X');
-        return crypt(text);
+        return rotate(text, 'X');
     }
 
     public static String rotate(String s, Character c) {
@@ -87,52 +86,27 @@ public class ROT13 {
     }
 
     public void cryptFile() throws IOException {
-        customSwitch = true;
         File inF = new File("sonnet18.txt");
         File outF = new File("sonnet18.enc");
-        FileReader ins = null;
-        FileWriter outs = null;
-        try {
-            ins = new FileReader(inF);
-            outs = new FileWriter(outF);
-            int ch;
-            while ((ch = ins.read()) != -1) {
-                outs.write(ch);
-            }
-        } catch (IOException e) {
-            System.out.println(e);
-            System.exit(-1);
-        } finally {
-            try {
-                ins.close();
-                outs.close();
-            } catch (IOException e) {
-            }
+        String toBeModified = "";
+        BufferedReader reader = new BufferedReader(new FileReader(inF));
+        String line = reader.readLine();
+
+        while(line != null)
+        {
+            toBeModified += line + System.lineSeparator();
+            line = reader.readLine();
         }
-
-
-
-
+        customSwitch = true;
+        String customString = encrypt(toBeModified);
+        String caeserString = caesarCipher(toBeModified);
+        String modified = customString + "\n\n" + caeserString;
+        FileWriter writer = new FileWriter(outF);
+        writer.write(modified);
+        reader.close();
+        writer.close();
     }
-
-
-
 
 }
 
-
-
-
-
-
-
-
-//        Path pathFrom = Paths.get("/Users/chris/Projects/SimpleCrypt/sonnet18.txt");
-//        Path pathTo = Paths.get("/Users/chris/Projects/SimpleCrypt/sonnet18.enc");
-//        String file2Txt = String.valueOf(Files.readAllBytes(pathFrom));
-//        customSwitch = true;
-//        String customString = encrypt(file2Txt);
-//        String caeserString = caesarCipher(file2Txt);
-//        String result = customString + "\n\n" + caeserString;
-//        Files.writeString(pathTo, result.toString(), StandardCharsets.UTF_8);
 
