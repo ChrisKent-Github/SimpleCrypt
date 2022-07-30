@@ -23,7 +23,7 @@ public class ROT13Test {
     public void rotateStringTest1() {
         // Given
         String s1 = "ABCDEF";
-        String s2 = "DEFABC";
+        String s2 = "DEFGHI";
 
         // When
         ROT13 cipher = new ROT13();
